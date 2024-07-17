@@ -1,5 +1,7 @@
 const x = document.getElementById("demo");
 
+let currentCityName = "臺北市";
+
 const stationToCityMap = new Map([
   ["466850", "新北市"],
   ["466881", "新北市"],
@@ -37,28 +39,28 @@ const stationToCityMap = new Map([
 
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition, handleLocationError);
+    navigator.geolocation.getCurrentPosition(
+      position => showPosition(position), 
+      handleLocationError
+    );
   } else { 
-    x.innerHTML = "即時天氣";
+    x.innerHTML = "即時天氣"
+    fetchWeather("臺北市"); 
   }
 }
 
 function handleLocationError(error) {
   console.warn('Error getting location:', error.message);
-  const defaultLat = 25.09108;
-  const defaultLng = 121.5598;
-  showPosition({
-    coords: {
-      latitude: defaultLat,
-      longitude: defaultLng
-    }
-  });
+  fetchWeather("臺北市");
 }
 
 function showPosition(position) {
   const lat = position.coords.latitude;
   const lng = position.coords.longitude;
   const url = `https://api.nlsc.gov.tw/other/TownVillagePointQuery/${lng}/${lat}/4326`;
+  console.log("lat=", lat)
+  console.log("lng=", lng)
+  console.log(url)
 
   fetch(url)
   .then(response => response.text())
@@ -66,9 +68,11 @@ function showPosition(position) {
   .then(data => {
       const ctyName = data.querySelector('ctyName');
       if (!ctyName) {
-          console.error('City name not found in the response');
-          return;
+        console.error('City name not found in the response');
+        fetchWeather("臺北市"); 
+        return;
       }
+      currentCityName = ctyName.textContent;
       fetchWeather(ctyName.textContent);
       let stationIds = [];
       for (let [key, value] of stationToCityMap.entries()) {
@@ -82,7 +86,10 @@ function showPosition(position) {
         console.log("No station IDs found for", locationName);
       }
   })
-  .catch(error => console.error('Error:', error));
+  .catch(error => {
+    console.error('Error:', error);
+    fetchWeather("臺北市");  
+  });
 }
 
 function fetchWeather(locationName) {
@@ -173,7 +180,27 @@ function showRainfallRate(data) {
 function showUVrays(data) {
   const uvRaysContainer = document.getElementById('uv-rays');
   if (data.records.weatherElement.location.length === 0) {
-    uvRaysContainer.textContent = '無資料';
+    const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091";
+    const params = new URLSearchParams({
+      'Authorization': CWB_API_KEY,
+      'locationName': locationName 
+    });
+
+    fetch(`${url}?${params.toString()}`)
+      .then(response => response.json())
+      .then(data => {
+        const uviElement = data.records.locations[0].location[0].weatherElement.find(el => el.elementName === "UVI");
+        if (uviElement && uviElement.time.length > 0) {
+          const uviValue = uviElement.time[0].elementValue[0].value;
+          uvRaysContainer.textContent = uviValue;
+        } else {
+          uvRaysContainer.textContent = '無資料';
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching additional data:', error);
+        uvRaysContainer.textContent = '資料請求錯誤';
+      });
   } else {
     const maxUVIndex = data.records.weatherElement.location.reduce((max, item) => {
       return item.UVIndex > max.UVIndex ? item : max;
