@@ -6,6 +6,12 @@ body{
 .all-container {
 	display: flex;
 	height: 100%;
+
+	width: 100%;
+}
+.right-container {
+	position: absolute;
+	right: 0;
 }
 .left-container {
 	background-color: rgba(217, 217, 217, 0.2);
@@ -26,6 +32,7 @@ body{
 	grid-row-start: 1;
 	grid-row-end: 1.5;
 }
+
 .big-box {
 	grid-column-start: 1;
 	grid-column-end: 3;
@@ -35,6 +42,7 @@ body{
 	border-radius: 15px;
 
 }
+
 .small-box {
 	background-color: rgba(188, 226, 235, 0.8);
 	grid-row-start: 6;
@@ -57,3 +65,4 @@ body{
 	grid-row-end: 12;
 	border-radius: 15px;
 }
+

@@ -1,0 +1,19 @@
+
+
+
+svg{
+    fill:white;
+    height: 100vh;
+}
+
+path{
+    stroke:#6cc6db;
+    stroke-width: 5px;
+    transition:0.5s; 
+    cursor:pointer;
+}
+
+path:hover {
+    fill: #FFFDBB;
+    transform: translate(-5px, -5px);
+}
