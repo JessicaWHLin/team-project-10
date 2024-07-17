@@ -1,0 +1,168 @@
+.big-box {
+    background-color: #BCE2EB; 
+    border-radius: 10px; 
+    width: 520px; 
+    height: 520px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    color: #666666;
+}
+
+.big-box .text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-weight: 400;
+    padding: 0 50px;
+}
+
+.big-box .text-container .time-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 73px; 
+}
+
+#city-name{
+    font-size: 60px; 
+    line-height: 73px;
+}
+
+#city-temp-feel{
+    font-size: 18px; 
+    width:100%;
+    padding: 0 50px;
+}
+
+#date, #time {
+    font-size: 24px;
+}
+
+#average-temperature-content {
+    font-size: 120px; 
+    display: inline-flex;
+    width: 100%;
+    padding: 0 50px;
+    justify-content: space-between;
+    /* align-items: flex-start;  */
+}
+
+#temp-value {
+    line-height: 1; 
+}
+
+#temp-unit {
+    font-size: 16px; 
+    align-self: flex-end; 
+    margin-left: 2px; 
+}
+
+#temperature-description{
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#temperature-range {
+    font-size: 24px;
+    display: inline-flex;
+    align-items: flex-start; 
+}
+
+#temperature-range .temp-range-unit {
+    font-size: 12px; 
+    align-self: flex-end; 
+    margin-left: 2px; 
+}
+
+#rain-and-uv{
+    width:520px;
+    display: flex;
+    flex-direction: row;
+    gap:20px
+}
+
+#rain-and-uv .small-box{
+    width: 250px;
+    height: 200px;
+    background-color: #BCE2EB; 
+    border-radius: 10px; 
+    margin-top: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
+    justify-content: space-between;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+}
+
+#rain-and-uv .small-box-title{
+    font-size: 20px;
+    font-weight: 500;
+    color:#666666
+}
+
+#rain-and-uv .value{
+    font-size: 48px;
+    font-weight: 400;
+    color:#666666
+}
+
+#rainfall-rate-box {
+    position: relative;
+}
+
+.rain-drop-icon {
+    position: absolute; 
+    top: 30px; 
+    right: 30px; 
+    width: 50px; 
+    height: auto; 
+}
+
+.sun-icon {
+    position: absolute; 
+    top: 30px; 
+    right: 30px; 
+    width: 50px; 
+    height: auto; 
+}
+
+#UV-rays-box{
+    position: relative;
+}
+
+.sun-icon {
+    position: absolute; 
+    top: 30px; 
+    right: 30px; 
+    width: 30px; 
+    height: auto; 
+}
+
+
+.sun-light-icon {
+    position: absolute; 
+    top: 15px; 
+    right: 15px; 
+    width: 60px; 
+    height: auto; 
+}
+
+#average-temperature-content .real-time-sun{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#average-temperature-content .real-time-sun .major-sun-icon {
+    width: 100px; 
+    height: 100px;
+}
