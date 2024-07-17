@@ -1,32 +1,34 @@
-
 // const CWB_API_KEY="CWB-840CF1E7-FC59-4E06-81C9-F4BB79253855";
-let city="花蓮縣";
+let city="臺北市";
 let chartContainer=document.querySelector(".long-box-1");
-chartContainer.textContent="折線圖: "+city+"一周預報";
 chartContainer.classList.add("chartContainer");
-let canvas=document.createElement("canvas");
-canvas.id="chart";
-canvas.classList.add("canvas");
-chartContainer.appendChild(canvas);
-
-//table
-let tableContainer=document.createElement("table");
-tableContainer.classList.add("tableContainer");
-chartContainer.appendChild(tableContainer);
+let showCityName=document.createElement("div");
+showCityName.textContent=city;
+chartContainer.appendChild(showCityName);
+//line chart
+let canvasLineChart=document.createElement("canvas");
+canvasLineChart.id="lineChart";
+canvasLineChart.classList.add("canvasChart");
+//bar chart
+chartContainer.appendChild(canvasLineChart);
+let canvasBarChart_UV=document.createElement("canvas");
+canvasBarChart_UV.id="barChart_UV";
+canvasBarChart_UV.classList.add("canvasChart");
+chartContainer.appendChild(canvasBarChart_UV);
 
 weekly_chart(city);
 
 
-
 //函式區
-function weekly_chart(city){
-	let url=`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${CWB_API_KEY}&locationName=${city}`
-	fetch(url)
+export function weekly_chart(cityName){
+	showCityName.textContent=cityName;
+	let url=`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${CWB_API_KEY}&locationName=${cityName}`;
+ 	fetch(url)
 	.then(response=>{
 		return response.json();
 	}).then((data)=>{
 		let weeklyData=data.records.locations[0].location[0].weatherElement;
-		console.log(weeklyData);
+		// console.log(weeklyData);
 		//溫度
 		let avgT=weeklyData[1].time;
 		let maxT=weeklyData[12].time;
@@ -38,9 +40,11 @@ function weekly_chart(city){
 		let rainPop=weeklyData[0];
 		//紫外線
 		let UVI=weeklyData[9];
+		let UVI_list=get_data_list(UVI.time);
 
 		createLineChart(avgT_list[0],avgT_list[1],maxT_list[1],minT_list[1]);
-		createTable(UVI,rainPop);
+		
+		createBarChart("barChart_UV",UVI_list[0],UVI_list[1]);
 	}).catch(error=>{
 		console.log("error:", error);
 	});
@@ -54,8 +58,8 @@ function date(originString){
 	return formattedDate;
 }
 
-function createLineChart(labels,avgT,maxT,minT){
-	new Chart("chart",{
+async function createLineChart(labels,avgT,maxT,minT){
+	new Chart("lineChart",{
 		type:"line",
 		data:{
 			labels:labels,
@@ -91,14 +95,16 @@ function createLineChart(labels,avgT,maxT,minT){
 				borderWidth:1//線段寬度,default=3
 			}
 		]
-		},
+	},
+		
 		options:{
-
 			responsive: true,
 			legend:{display:true}, //是否顯示圖例
 			scales:{
 				yAxes: [
-					{ticks: {min: 24, max:40}},
+					{ticks: {min: 24, max:40},
+					gridLines: {display:false}
+				}
 				],
 				xAxes: [{
 					gridLines: {
@@ -130,35 +136,6 @@ function get_data_list(rawDataList){
 	return result;
 }
 
-function createTable(UVI,list1){
-	let rainPop=[];
-	for(let i =0;i<3;i++){
-		let rows=document.createElement("tr");
-		rows.classList.add("row");
-		rows.id="row-"+i;
-		for(let j=0;j<8;j++){
-			let cells=document.createElement("td");
-			cells.id="cell"+i+"-"+j;
-			if(i==0 &&j>0){
-				cells.textContent=date(UVI.time[j-1].startTime);
-			}
-			else if(i==1&& j>0){
-				cells.textContent=UVI.time[j-1].elementValue[0].value;
-			}
-			else{
-				rainPop=rainPop_daily(list1);
-				
-				cells.textContent=rainPop[j-1];
-			}
-			rows.appendChild(cells);
-		}
-		tableContainer.appendChild(rows);	
-	}
-	document.querySelector("#cell0-0").textContent="日期";
-	document.querySelector("#cell1-0").textContent=UVI.description;
-	document.querySelector("#cell2-0").textContent="降雨機率";
-}
-
 function rainPop_daily(list1){
 	let result=[];
 	let startTime_list=get_data_list(list1.time);
@@ -169,6 +146,63 @@ function rainPop_daily(list1){
 			}
 			else{result.push("0%");}
 		}
+	}
+	return result;
+}
+
+function createBarChart(id,labels,data){
+	let barColors=assignColor(data);
+	// console.log(barColors);
+	new Chart(id,{
+		type:"bar",
+		data:{
+			labels:labels,
+			datasets:[{
+				backgroundColor:barColors,
+				data:data
+			}]
+			},
+			options:{
+				responsive: true,
+				legend:{display:false},
+				scales:{
+					xAxes: [{
+						gridLines: {
+								display:false
+						}
+				}],
+					yAxes: [{
+						gridLines: {
+								display:false
+						},
+						ticks: {
+							min: 0,
+							max: 16
+						}
+					}],
+				}
+			}
+	});
+}
+
+function assignColor(data){
+	let result=[];
+	for(let i=0;i<data.length;i++){
+		if(data[i]>=1 && data[i]<=2){
+			result.push("#90ee90");//綠色
+		}
+		else if(data[i]>2 &&data[i]<=5){
+			result.push("#bdb76b");//黃色
+		}
+		else if(data[i]>5 && data[i]<=7){
+			result.push("#cd853f");// 黃橘
+		}
+		else if(data[i]>7 && data[i]<=10){
+			result.push("#d2691e"); //深橘
+		}
+		else{
+			result.push("#b22222");//紅色		
+			}
 	}
 	return result;
 }
