@@ -45,19 +45,13 @@ function getLocation() {
     );
   } else { 
     x.innerHTML = "即時天氣"
+    fetchWeather("臺北市"); 
   }
 }
 
 function handleLocationError(error) {
   console.warn('Error getting location:', error.message);
-  const defaultLat = 25.09108;
-  const defaultLng = 121.5598;
-  showPosition({
-    coords: {
-      latitude: defaultLat,
-      longitude: defaultLng
-    }
-  }, false); 
+  fetchWeather("臺北市");
 }
 
 function showPosition(position) {
@@ -71,8 +65,9 @@ function showPosition(position) {
   .then(data => {
       const ctyName = data.querySelector('ctyName');
       if (!ctyName) {
-          console.error('City name not found in the response');
-          return;
+        console.error('City name not found in the response');
+        fetchWeather("臺北市"); 
+        return;
       }
       currentCityName = ctyName.textContent;
       fetchWeather(ctyName.textContent);
@@ -88,7 +83,10 @@ function showPosition(position) {
         console.log("No station IDs found for", locationName);
       }
   })
-  .catch(error => console.error('Error:', error));
+  .catch(error => {
+    console.error('Error:', error);
+    fetchWeather("臺北市");  
+  });
 }
 
 function fetchWeather(locationName) {
