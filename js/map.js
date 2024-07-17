@@ -1,41 +1,39 @@
+var cityName = "";
 
-let cityName = "";
-
-// Function to handle highlighting based on user input
+// handle user input
 function highlightCity(cityName) {
     const p = document.querySelectorAll("path");
 
     p.forEach(function(item) {
         const dataName = item.getAttribute("data-name");
-        if (dataName === cityName.toLowerCase()) {
-            item.classList.add("highlight");
+        if (dataName === cityName) {
+            item.classList.add("highlight"); 
         } else {
-            item.classList.remove("highlight");
+            item.classList.remove("highlight"); 
         }
     });
 }
 
-// Function to get user input and trigger highlighting
+// delete this one when merge location 
 function getUserInputAndHighlight() {
-    const userInput = prompt("你在哪個城市？");
+    const userInput = prompt("你在哪個城市？"); 
     if (userInput) {
-        cityName = userInput.toLowerCase(); 
-        highlightCity(cityName);
+        highlightCity(userInput);
     }
 }
 
-// Event listener for path clicks
+// if user click map 
 const p = document.querySelectorAll("path");
-
 p.forEach(function(item) {
     item.addEventListener("click", function() {
-        console.log(cityName); 
-        highlightCity(cityName); 
+        cityName = item.getAttribute("data-name");
+        console.log(cityName);
+        highlightCity(cityName);  
     });
 });
 
-
-
-
-
+// Trigger user input prompt on load
 getUserInputAndHighlight();
+
+  
+
