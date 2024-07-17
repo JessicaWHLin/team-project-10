@@ -4,29 +4,64 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>雨量觀測</title>
-	<!-- 建立整體樣式指導：基礎字型、字體、基底色、標題、段落樣式等等 -->
+	<title>即時氣候</title>
 	<link rel="stylesheet" type="text/css" href="css/common.css" />
-	<!-- 建立雨量觀測部份的樣式 -->
-	<link rel="stylesheet" type="text/css" href="css/raining.css" />
+	<link rel="stylesheet" type="text/css" href="css/realtime.css" />
 </head>
 <body>
-	<!-- 美化雨量觀測顯示、資料處理或建立資料分頁功能 -->
-	<h3>雨量觀測</h3>
-	<div id="raining"></div>
+	<!-- <h1>即時天氣</h1>
+	<p>點擊得到即時天氣</p>
 
-	<!--
-		完成各縣市氣象預報功能
-		請使用中央氣象局公開 API 的第一個資料集 (/v1/rest/datastore/F-C0032-001)
-		https://opendata.cwa.gov.tw/dist/opendata-swagger.html
-	-->
-	<h3>各縣市最新氣象預報 ( 文字描述、低溫、高溫 )</h3>
+	<button onclick="getLocation()">點擊</button> -->
+	<div class="left-container" id="left-container">
+		<div class="left-grid" id="left-grid">
+			<div class="website-name">Weather Taiwan</div>
+			<div class="big-box">
+			 <div class="text-container">
+			    <div id="city-name"></div>
+				<div class="time-info">
+					<div id="date"></div>
+					<div id="time"></div>
+				</div>
+			 </div>
+			    <div id="city-temp-feel"></div>
+				<div id="average-temperature-content">
+				  <div class="real-time-sun">
+					<img src="images/major-sun.png" alt="Major Light" class="major-sun-icon">
+				  </div>
+				  <div class="real-time-temp">
+					<span id="temp-value"></span><span id="temp-unit">°C</span>
+				  </div>
+				</div>
+				<div id="temperature-description"></div>
+				<div id="temperature-range">
+					最高溫: <span class="temp-range-value">${minTValue}</span><span class="temp-range-unit">°C</span> ~ 
+					最低溫: <span class="temp-range-value">${maxTValue}</span><span class="temp-range-unit">°C</span>
+				</div>
+			</div>
+			<div id="rain-and-uv">
+			  <div id="rainfall-rate-box" class="small-box">
+				<span class="small-box-title">降雨機率</span>
+				<img src="images/rain-drop.png" alt="Rain Drop" class="rain-drop-icon">
+				<div id="rainfall-rate" class="value"></div>
+			  </div>
+			  <div id="UV-rays-box" class="small-box">
+				  <span class="small-box-title">紫外線指數</span>
+				  <img src="images/sun.png" alt="Sun" class="sun-icon">
+				  <img src="images/sun-light.png" alt="Sun Light" class="sun-light-icon">
+				  <div id="uv-rays" class="value"></div>
+		     </div>
+		   </div>
+			<div class="long-box-1">折線圖</div>
+			<div class="long-box-2">EXTRA EXTRA</div>
+		</div>
+	</div>
+
+	<p id="demo"></p>
 	<div id="weather"></div>
 	<script>
-		// 以下是我申請的 KEY 請使用無所謂，你也可以自己去中央氣象局網站申請一個
-		// https://opendata.cwa.gov.tw/index
 		const CWB_API_KEY="CWB-840CF1E7-FC59-4E06-81C9-F4BB79253855";
 	</script>
-	<script src="js/raining.js"></script>
+	<script src="js/realtime.js"></script>
 </body>
 </html>
