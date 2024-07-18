@@ -187,6 +187,30 @@ function showBigBoxContent(data){
     const wxElement = weatherElements.find(el => el.elementName === 'Wx');
     const wxDescription = wxElement.time[0].parameter.parameterName;
 
+    let iconSrc = '';
+    switch (wxDescription) {
+      case '多雲短暫陣雨':
+        iconSrc = 'images/rain_cloudy.png';
+        break;
+      case '晴午後短暫雷陣雨':
+        iconSrc = 'images/sun_rain_cloudy.png';
+        break;
+      case '晴時多雲':
+      case '多雲時晴':
+        iconSrc = 'images/sun_cloudy.png';
+        break;
+      case '多雲時陰':
+        iconSrc = 'images/super_cloudy.png';
+        break;
+      default:
+        iconSrc = 'images/major-sun.png';
+        break;
+    }
+
+    const imgElement = document.querySelector('.major-sun-icon');
+    imgElement.src = iconSrc;
+    imgElement.alt = wxDescription;
+
     const minTElement = weatherElements.find(el => el.elementName === 'MinT');
     const minTValue = minTElement.time[0].parameter.parameterName;
 
@@ -215,7 +239,7 @@ function showBigBoxContent(data){
 
     const dateString = `${weekday} ${day}`; 
 
-    const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }); 
+    const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false}); 
     document.getElementById('date').textContent = dateString;
     document.getElementById('time').textContent = timeString;
 }
