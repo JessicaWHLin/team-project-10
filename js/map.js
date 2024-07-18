@@ -1,5 +1,5 @@
-import { weekly_chart } from "./weekly_chart.js";//J
-import { fetchWeather,findLocationIds,fetchUV } from "./realtime.js";
+// import { weekly_chart } from "./weekly_chart.js";//J
+// import { fetchWeather,findLocationIds,fetchUV } from "./realtime.js";
 var cityName = "";
 
 // handle user input

@@ -1,4 +1,4 @@
-import { weekly_chart } from "./weekly_chart.js";//J
+import { weekly_chart } from "./weekly_chart.js";
 
 let currentCityName = "臺北市";
 
