@@ -1,41 +1,5 @@
-const x = document.getElementById("demo");
-import { weekly_chart } from "./weekly_chart.js";//J
-let currentCityName = "臺北市";
-
-const stationToCityMap = new Map([
-  ["466850", "新北市"],
-  ["466881", "新北市"],
-  ["466900", "新北市"],
-  ["466910", "臺北市"],
-  ["466920", "臺北市"],
-  ["466930", "臺北市"],
-  ["466940", "基隆市"],
-  ["466950", "基隆市"],
-  ["466990", "花蓮縣"],
-  ["467050", "桃園市"],
-  ["467080", "宜蘭縣"],
-  ["467110", "金門縣"],
-  ["467270", "彰化縣"],
-  ["467280", "苗栗縣"],
-  ["467300", "澎湖縣"],
-  ["467350", "澎湖縣"],
-  ["467410", "臺南市"],
-  ["467420", "臺南市"],
-  ["467441", "高雄市"],
-  ["467480", "嘉義市"],
-  ["467490", "臺中市"],
-  ["467530", "嘉義縣"],
-  ["467540", "臺東縣"],
-  ["467550", "南投縣"],
-  ["467571", "新竹縣"],
-  ["467590", "屏東縣"],
-  ["467610", "臺東縣"],
-  ["467620", "臺東縣"],
-  ["467650", "南投縣"],
-  ["467660", "臺東縣"],
-  ["467790", "屏東縣"],
-  ["467990", "連江縣"]
-]);
+import { weekly_chart } from "./weekly_chart.js";
+import { highlightCity } from "./map.js";
 
 function getLocation() {
   if (navigator.geolocation) {
@@ -44,14 +8,31 @@ function getLocation() {
       handleLocationError
     );
   } else { 
-    x.innerHTML = "即時天氣"
     fetchWeather("臺北市"); 
+    weekly_chart("臺北市");
+    highlightCity("臺北市");
+    const stationIds = getStationIdsForCity("臺北市");
+    if (stationIds.length > 0) {
+      fetchUV(stationIds);
+      } else {
+        const uvRaysContainer = document.getElementById('uv-rays');
+        uvRaysContainer.textContent = '無資料';
+    }
   }
 }
 
 function handleLocationError(error) {
   console.warn('Error getting location:', error.message);
   fetchWeather("臺北市");
+  weekly_chart("臺北市");
+  highlightCity("臺北市");
+  const stationIds = getStationIdsForCity("臺北市");
+  if (stationIds.length > 0) {
+    fetchUV(stationIds);
+    } else {
+      const uvRaysContainer = document.getElementById('uv-rays');
+      uvRaysContainer.textContent = '無資料';
+  }
 }
 
 function showPosition(position) {
@@ -65,48 +46,107 @@ function showPosition(position) {
   .then(data => {
       const ctyName = data.querySelector('ctyName');
       if (!ctyName) {
-        console.error('City name not found in the response');
         fetchWeather("臺北市"); 
+        weekly_chart("臺北市");
+        highlightCity("臺北市");
+        const stationIds = getStationIdsForCity("臺北市");
+        if (stationIds.length > 0) {
+          fetchUV(stationIds);
+          } else {
+            const uvRaysContainer = document.getElementById('uv-rays');
+            uvRaysContainer.textContent = '無資料';
+        }
         return;
       }
-      currentCityName = ctyName.textContent;
       fetchWeather(ctyName.textContent);
-      let stationIds = [];
-      for (let [key, value] of stationToCityMap.entries()) {
-        if (value === ctyName.textContent) {
-          stationIds.push(key);
-        }
-      }
+      weekly_chart(ctyName.textContent);
+      highlightCity(ctyName.textContent);
+      const stationIds = getStationIdsForCity(ctyName.textContent);
       if (stationIds.length > 0) {
         fetchUV(stationIds);
       } else {
-        console.log("No station IDs found for", locationName);
+        const uvRaysContainer = document.getElementById('uv-rays');
+        uvRaysContainer.textContent = '無資料';
       }
   })
   .catch(error => {
     console.error('Error:', error);
-    fetchWeather("臺北市");  
+    fetchWeather("臺北市"); 
+    weekly_chart("臺北市"); 
+    highlightCity("臺北市");
+    const stationIds = getStationIdsForCity("臺北市");
+    if (stationIds.length > 0) {
+      fetchUV(stationIds);
+      } else {
+        const uvRaysContainer = document.getElementById('uv-rays');
+        uvRaysContainer.textContent = '無資料';
+    }
   });
 }
 
-export function fetchWeather(locationName) { //J
+function getStationIdsForCity(cityName) {
+  const stationToCityMap = new Map([
+    ["466850", "新北市"],
+    ["466881", "新北市"],
+    ["466900", "新北市"],
+    ["466910", "臺北市"],
+    ["466920", "臺北市"],
+    ["466930", "臺北市"],
+    ["466940", "基隆市"],
+    ["466950", "基隆市"],
+    ["466990", "花蓮縣"],
+    ["467050", "桃園市"],
+    ["467080", "宜蘭縣"],
+    ["467110", "金門縣"],
+    ["467270", "彰化縣"],
+    ["467280", "苗栗縣"],
+    ["467300", "澎湖縣"],
+    ["467350", "澎湖縣"],
+    ["467410", "臺南市"],
+    ["467420", "臺南市"],
+    ["467441", "高雄市"],
+    ["467480", "嘉義市"],
+    ["467490", "臺中市"],
+    ["467530", "嘉義縣"],
+    ["467540", "臺東縣"],
+    ["467550", "南投縣"],
+    ["467571", "新竹縣"],
+    ["467590", "屏東縣"],
+    ["467610", "臺東縣"],
+    ["467620", "臺東縣"],
+    ["467650", "南投縣"],
+    ["467660", "臺東縣"],
+    ["467790", "屏東縣"],
+    ["467990", "連江縣"]
+  ]);
+  const stationIds = [];
+  for (let [key, value] of stationToCityMap.entries()) {
+    if (value === cityName) {
+      stationIds.push(key);
+    }
+  }
+  return stationIds;
+}
+
+async function fetchWeather(locationName) {
   const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001";
-
   const params = new URLSearchParams({
-      'Authorization': CWB_API_KEY,
-      'locationName': locationName
+    'Authorization': CWB_API_KEY,
+    'locationName': locationName
   });
 
-  fetch(`${url}?${params.toString()}`)
-  .then(response => response.json())
-  .then(data => {
-    showBigBoxContent(data)
-    showRainfallRate(data)
-})
-  .catch(error => console.error('Error fetching weather:', error));
+  try {
+    const response = await fetch(`${url}?${params.toString()}`);
+    const data = await response.json();
+    showBigBoxContent(data);
+    showRainfallRate(data);
+  } catch (error) {
+    console.error('Error fetching weather:', error);
+  }
 }
 
-export function fetchUV(stationIds) {//J
+async function fetchUV(stationIds) {
+
   const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0005-001";
   const params = new URLSearchParams({
       'Authorization': CWB_API_KEY
@@ -114,12 +154,31 @@ export function fetchUV(stationIds) {//J
 
   stationIds.forEach(id => params.append('StationID', id));
 
-  fetch(`${url}?${params.toString()}`)
-  .then(response => response.json())
-  .then(data => {
+  try {
+    const response = await fetch(`${url}?${params.toString()}`);
+    const data = await response.json();
     showUVrays(data);
-  })
-  .catch(error => console.error('Error fetching UV:', error));
+  } catch (error) {
+    console.error('Error fetching UV:', error);
+  }
+}
+
+//給地圖點擊的接口
+export function fetchWeatherAndUV(cityName) {
+  try {
+    console.log('hi')
+    fetchWeather(cityName);
+    weekly_chart(cityName);
+    const stationIds = getStationIdsForCity(cityName);
+    if (stationIds.length > 0) {
+      fetchUV(stationIds);
+    } else {
+      const uvRaysContainer = document.getElementById('uv-rays');
+      uvRaysContainer.textContent = '無資料';
+    }
+  } catch (error) {
+    console.error('Error in fetchWeatherAndUV:', error);
+  }
 }
 
 function showBigBoxContent(data){
@@ -143,7 +202,6 @@ function showBigBoxContent(data){
 
     const locationName = data.records.location[0].locationName;
     document.getElementById('city-name').textContent = locationName;
-    weekly_chart(locationName); //J
 
     const ciElement = weatherElements.find(el => el.elementName === 'CI');
     const ciDescription = ciElement.time[0].parameter.parameterName;
@@ -212,14 +270,3 @@ document.addEventListener('DOMContentLoaded', async function() {
   getLocation()
 });
 
-
-//J
-export function findLocationIds(cityName){
-  let stationIds = [];
-  for (let [key, value] of stationToCityMap.entries()) {
-    if (value === cityName) {
-      stationIds.push(key);
-    }
-  }
-  return stationIds;
-}
