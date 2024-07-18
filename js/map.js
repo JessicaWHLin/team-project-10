@@ -1,8 +1,9 @@
+import {fetchWeatherAndUV} from "./realtime.js";
 
-var cityName = "";
+// var cityName = "";
 
 // handle user input
-function highlightCity(cityName) {
+export function highlightCity(cityName) {
     const p = document.querySelectorAll("path");
 
     p.forEach(function(item) {
@@ -15,8 +16,7 @@ function highlightCity(cityName) {
     });
 }
 
-
-
+fetchWeatherAndUV("彰化縣");
 
 // if user click map 
 const tooltip = document.getElementById("tooltip");
@@ -27,7 +27,7 @@ paths.forEach(path=> {
         tooltip.innerHTML=cityName;
         tooltip.style.display="block";
         console.log(cityName);
-        fetchWeatherAndUV(cityName);
+        // fetchWeatherAndUV(cityName);
         highlightCity(cityName);
     });
         path.addEventListener("mousemove", (event) => {
@@ -40,8 +40,6 @@ paths.forEach(path=> {
       });
 });
 
-// Trigger user input prompt on load
-getUserInputAndHighlight();
 
 
 

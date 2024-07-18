@@ -1,6 +1,7 @@
 import { weekly_chart } from "./weekly_chart.js";
+import { highlightCity } from "./map.js";
 
-let currentCityName = "臺北市";
+// let currentCityName = "臺北市";
 
 const stationToCityMap = new Map([
   ["466850", "新北市"],
@@ -46,6 +47,7 @@ function getLocation() {
   } else { 
     fetchWeather("臺北市"); 
     weekly_chart("臺北市");
+    highlightCity("臺北市");
     const stationIds = getStationIdsForCity("臺北市");
     if (stationIds.length > 0) {
       fetchUV(stationIds);
@@ -60,6 +62,7 @@ function handleLocationError(error) {
   console.warn('Error getting location:', error.message);
   fetchWeather("臺北市");
   weekly_chart("臺北市");
+  highlightCity("臺北市");
   const stationIds = getStationIdsForCity("臺北市");
   if (stationIds.length > 0) {
     fetchUV(stationIds);
@@ -82,6 +85,7 @@ function showPosition(position) {
       if (!ctyName) {
         fetchWeather("臺北市"); 
         weekly_chart("臺北市");
+        highlightCity("臺北市");
         const stationIds = getStationIdsForCity("臺北市");
         if (stationIds.length > 0) {
           fetchUV(stationIds);
@@ -91,9 +95,10 @@ function showPosition(position) {
         }
         return;
       }
-      currentCityName = ctyName.textContent;
+      // currentCityName = ctyName.textContent;
       fetchWeather(ctyName.textContent);
       weekly_chart(ctyName.textContent);
+      highlightCity(ctyName.textContent);
       const stationIds = getStationIdsForCity(ctyName.textContent);
       if (stationIds.length > 0) {
         fetchUV(stationIds);
@@ -106,6 +111,7 @@ function showPosition(position) {
     console.error('Error:', error);
     fetchWeather("臺北市"); 
     weekly_chart("臺北市"); 
+    highlightCity("臺北市");
     const stationIds = getStationIdsForCity("臺北市");
     if (stationIds.length > 0) {
       fetchUV(stationIds);
@@ -162,15 +168,17 @@ async function fetchUV(stationIds) {
 }
 
 //給地圖點擊的接口
-async function fetchWeatherAndUV(cityName) {
+export function fetchWeatherAndUV(cityName) {
   try {
-    await fetchWeather(cityName);
-    await weekly_chart(cityName)
+    console.log('hi')
+    fetchWeather(cityName);
+    weekly_chart(cityName);
     const stationIds = getStationIdsForCity(cityName);
     if (stationIds.length > 0) {
-      await fetchUV(stationIds);
+      fetchUV(stationIds);
     } else {
-      console.log("No station IDs found for", cityName);
+      const uvRaysContainer = document.getElementById('uv-rays');
+      uvRaysContainer.textContent = '無資料';
     }
   } catch (error) {
     console.error('Error in fetchWeatherAndUV:', error);
