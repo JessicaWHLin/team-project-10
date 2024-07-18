@@ -1,10 +1,10 @@
 
 // const CWB_API_KEY="CWB-840CF1E7-FC59-4E06-81C9-F4BB79253855";
-let city="臺北市";
+// let city="臺北市";
 let chartContainer=document.querySelector(".long-box-1");
 chartContainer.classList.add("chartContainer");
 let showCityName=document.createElement("div");
-showCityName.textContent=city;
+showCityName.textContent= "臺北市";
 chartContainer.appendChild(showCityName);
 //line chart
 let canvasLineChart=document.createElement("canvas");
@@ -18,12 +18,12 @@ canvasBarChart_UV.classList.add("canvasChart");
 chartContainer.appendChild(canvasBarChart_UV);
 
 
-weekly_chart(city);
+// weekly_chart(city);
 
 
 
 //函式區
-export function weekly_chart(cityName){
+export async function weekly_chart(cityName){
 	showCityName.textContent=cityName;
 	let url=`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${CWB_API_KEY}&locationName=${cityName}`;
  	fetch(url)
