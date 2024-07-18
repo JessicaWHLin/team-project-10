@@ -270,35 +270,96 @@ body{
 
 
 
-/*RWD*/
+/* RWD */
 @media (max-width: 1200px){
-	.all-container{
-		flex-direction: column;
-	}
-	.right-container{
-		position: relative;
-		top: 0;
-	}
+    .all-container{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .right-container{
+        position: relative;
+        right: 0;
+    }
 }
 
-
-/*
-.all-container {
-	display: flex;
-	height: 100%;
-	width: 100%;
-}
-.right-container {
-	position: absolute;
-	right: 0;
-}
-*/
 @media (max-width: 900px){
-	.all-container{
-		flex-direction: column;
-	}
-	.right-container{
-		position: relative;
-		top: 0;
-	}
+    .all-container{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .right-container{
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 600px){
+    .right-container{
+        width: 100%;
+    }
+    .left-grid{
+        width: 400px;
+        margin-top: 20px;
+    }
+    #svg-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+    }
+    #svg-container svg{
+        width: 400px;
+        height: auto;
+        margin: 0 auto;
+    }
+    .sun-light-icon{
+        height: 50px;
+        width: 50px;
+    }
+    .rain-drop-icon{
+        height: 50px;
+        width: 50px;
+    }
+    .major-sun-icon{
+        height: 50px;
+        width: 50px;
+    }
+    .temp-value{
+        font-size: 100px;
+    }
+    .temp-unit{
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 460px){
+    .big-box{
+        padding: 20px;
+    }
+    .left-grid{
+        width: 300px;
+        margin-top: 20px;
+        row-gap: 10px;
+        column-gap: 10px;
+    }
+    #svg-container svg{
+        width: 320px;
+        height: auto;
+        margin: 0 auto;
+    }
+    .sun-light-icon{
+        display: none;
+    }
+    .rain-drop-icon{
+        display: none;
+    }
+    .major-sun-icon{
+        display: none;
+    }
+    .city-name{
+        font-size: 20px;
+    }
+    .time{
+        font-size: 20px;
+    }
 }
