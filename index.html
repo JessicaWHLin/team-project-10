@@ -7,8 +7,10 @@
 	<title>Taiwan Weather</title>
 	<!-- 建立整體樣式指導：基礎字型、字體、基底色、標題、段落樣式等等 -->
 	<link rel="stylesheet" type="text/css" href="css/common.css" />
+
 	<!--即時氣候css全部在common.css裡面了
 	<link rel="stylesheet" type="text/css" href="css/realtime.css" />-->
+
 	<!--折線圖-->
 	<link rel="stylesheet" type="text/css" href="css/chart.css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -20,6 +22,7 @@
 	<div class="all-container" id="all-container">
 		<!--左邊的grid，天氣資料-->
 		<div class="left-container" id="left-container">
+
 			<div class="left-grid" id="left-grid">				
 				<!--大方格-->
 				<div class="big-box">
@@ -138,6 +141,7 @@
 		</div>
 	</div>
 
+
 	<!--問Ellen，這個需要嗎?-->
 	<p id="demo"></p>
 	<div id="weather"></div>
@@ -147,10 +151,12 @@
 		const CWB_API_KEY="CWB-840CF1E7-FC59-4E06-81C9-F4BB79253855";
 	</script>
 	<!--即時天氣-->
+
 	<script src="js/realtime.js"></script>
 	<!--折線圖-->
 	<script src="js/weekly_chart.js"></script>
 	<!--地圖-->
 	<script src="js/map.js"></script>
+
 </body>
 </html>

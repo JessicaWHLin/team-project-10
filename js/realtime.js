@@ -1,5 +1,7 @@
 const x = document.getElementById("demo");
 
+import { weekly_chart } from "./weekly_chart.js";//J
+
 let currentCityName = "臺北市";
 
 const stationToCityMap = new Map([
@@ -58,9 +60,7 @@ function showPosition(position) {
   const lat = position.coords.latitude;
   const lng = position.coords.longitude;
   const url = `https://api.nlsc.gov.tw/other/TownVillagePointQuery/${lng}/${lat}/4326`;
-  console.log("lat=", lat)
-  console.log("lng=", lng)
-  console.log(url)
+
 
   fetch(url)
   .then(response => response.text())
@@ -92,7 +92,8 @@ function showPosition(position) {
   });
 }
 
-function fetchWeather(locationName) {
+export function fetchWeather(locationName) { //J
+
   const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001";
 
   const params = new URLSearchParams({
@@ -109,7 +110,9 @@ function fetchWeather(locationName) {
   .catch(error => console.error('Error fetching weather:', error));
 }
 
-function fetchUV(stationIds) {
+
+export function fetchUV(stationIds) {//J
+
   const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0005-001";
   const params = new URLSearchParams({
       'Authorization': CWB_API_KEY
@@ -120,7 +123,8 @@ function fetchUV(stationIds) {
   fetch(`${url}?${params.toString()}`)
   .then(response => response.json())
   .then(data => {
-    showUVrays(data)
+
+    showUVrays(data);
   })
   .catch(error => console.error('Error fetching UV:', error));
 }
@@ -146,6 +150,9 @@ function showBigBoxContent(data){
 
     const locationName = data.records.location[0].locationName;
     document.getElementById('city-name').textContent = locationName;
+
+    weekly_chart(locationName); //J
+
 
     const ciElement = weatherElements.find(el => el.elementName === 'CI');
     const ciDescription = ciElement.time[0].parameter.parameterName;
@@ -212,4 +219,18 @@ function showUVrays(data) {
 
 document.addEventListener('DOMContentLoaded', async function() {
   getLocation()
+
 });
+
+
+//J
+export function findLocationIds(cityName){
+  let stationIds = [];
+  for (let [key, value] of stationToCityMap.entries()) {
+    if (value === cityName) {
+      stationIds.push(key);
+    }
+  }
+  return stationIds;
+}
+
