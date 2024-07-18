@@ -46,26 +46,81 @@ body{
 
 }
 
+/*小方格 = 降雨機率+紫外線指數*/
 .small-box {
 	background-color: rgba(188, 226, 235, 0.8);
-	grid-row-start: 6;
-	grid-row-end: 8;
+	grid-row-start: 5;
+	grid-row-end: 7;
 	border-radius: 15px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+
+	padding: 25px;
+	position: relative;
+
+}
+#rainfall-rate-box {
+    display: flex;
+    flex-direction: column;
+	justify-content: space-between;
+}
+#UV-rays-box {
+    display: flex;
+    flex-direction: column;
+	justify-content: space-between;
+}
+.small-box-title {
+	font-family: 'Noto Sans TC', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color:#666666
+}
+.rain-drop-icon {
+	height: 100px;
+	width: 100px;
+	align-self: flex-end;
+	position: absolute;
+	top: 20px;
+	right: 10px;
+}
+.sun-light-icon {
+	height: 100px;
+	width: 100px;
+	align-self: flex-end;
+	position: absolute;
+	top: 15px;
+	right: 10px;
+}
+.value{
+	font-family: 'Noto Sans TC', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    color:#666666;
+	bottom: auto;
 }
 .long-box-1 {
 	background-color: rgba(188, 226, 235, 0.8);
 	grid-column-start: 1;
 	grid-column-end: 3;
-	grid-row-start: 8;
-	grid-row-end: 10;
+	grid-row-start: 7;
+	grid-row-end: 9;
 	border-radius: 15px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 .long-box-2 {
 	background-color: rgba(188, 226, 235, 0.8);
 	grid-column-start: 1;
 	grid-column-end: 3;
-	grid-row-start: 10;
-	grid-row-end: 12;
+	grid-row-start: 9;
+	grid-row-end: 11;
 	border-radius: 15px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-
+.long-box-3 {
+	background-color: rgba(188, 226, 235, 0.8);
+	grid-column-start: 1;
+	grid-column-end: 3;
+	grid-row-start: 11;
+	grid-row-end: 13;
+	border-radius: 15px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

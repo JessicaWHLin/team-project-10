@@ -24,7 +24,6 @@ function highlightCity(cityName) {
 //     }
 // }
 
-
 // if user click map 
 const p = document.querySelectorAll("path");
 p.forEach(function(item) {
@@ -37,8 +36,6 @@ p.forEach(function(item) {
         let stationIds=[];
         stationIds=findLocationIds(cityName);
         fetchUV(stationIds);
-        weekly_chart(cityName); 
-       
     });
 });
 
