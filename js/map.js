@@ -1,5 +1,4 @@
-// import { weekly_chart } from "./weekly_chart.js";//J
-// import { fetchWeather,findLocationIds,fetchUV } from "./realtime.js";
+
 var cityName = "";
 
 // handle user input
@@ -16,36 +15,33 @@ function highlightCity(cityName) {
     });
 }
 
-// // delete this one when merge location 
-// function getUserInputAndHighlight() {
-//     const userInput = prompt("你在哪個城市？"); 
-//     if (userInput) {
-//         highlightCity(userInput);
-//     }
-// }
+
 
 
 // if user click map 
-const p = document.querySelectorAll("path");
-p.forEach(function(item) {
-    item.addEventListener("click", async function() {
-        cityName = item.getAttribute("data-name");
+const tooltip = document.getElementById("tooltip");
+const paths = document.querySelectorAll("path");
+paths.forEach(path=> {
+    path.addEventListener("click", function(event) {
+        cityName = event.target.getAttribute("data-name");
+        tooltip.innerHTML=cityName;
+        tooltip.style.display="block";
         console.log(cityName);
         highlightCity(cityName);
-        //J 
-        fetchWeather(cityName);
-        let stationIds=[];
-        stationIds=findLocationIds(cityName);
-        fetchUV(stationIds);
-        weekly_chart(cityName); 
-       
     });
+        path.addEventListener("mousemove", (event) => {
+        tooltip.style.left = event.pageX + 10 + "px";
+        tooltip.style.top = event.pageY + 10 + "px";
+      });
+  
+      path.addEventListener("mouseout", () => {
+        tooltip.style.display = "none";
+      });
 });
 
 // Trigger user input prompt on load
-// getUserInputAndHighlight();
+getUserInputAndHighlight();
 
 
 
 
-  
