@@ -6,17 +6,13 @@ body{
 .all-container {
 	display: flex;
 	height: 100%;
-
 	width: 100%;
 }
 .right-container {
 	position: absolute;
 	right: 0;
 }
-.left-container {
-	background-color: rgba(217, 217, 217, 0.2);
-	
-}
+
 .left-grid {
 	display: grid;
 	width: 500px;
@@ -95,18 +91,25 @@ body{
 	justify-content: space-between;
 	position: relative;
 }
+
+.detail-wrapper {
+	display: flex;
+	justify-content: space-between;
+}
 .major-sun-icon {
 	height: 75px;
 	width: 75px;
-	position: absolute;
+
 	bottom: 30px;
 }
-.real-time-sun {
-
+.description-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 .temp-value {
 	font-family: 'Noto Sans TC', sans-serif;
-    font-size: 160px;
+    font-size: 140px;
     font-weight: 100;
     color:#666666
 }
@@ -216,3 +219,60 @@ body{
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+
+
+
+
+.footer {
+    width: 100%;
+    height: 104px;
+}
+.f-wrapper {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #666666;
+}
+.f-text-bold {
+	margin-top: 10px;
+
+	font-family: 'Noto Sans TC', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 13.3px;
+}
+.f-text {
+	margin-top: 10px;
+
+	font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 13.3px;
+}
+
+
+
+/*RWD*/
+@media (max-width: 1200px){
+	.all-container{
+		flex-direction: column;
+	}
+	.right-container{
+		position: relative;
+		top: 0;
+	}
+}
+
+/*
+.all-container {
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+.right-container {
+	position: absolute;
+	right: 0;
+}
+*/
