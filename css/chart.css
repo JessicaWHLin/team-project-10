@@ -5,8 +5,7 @@
 	margin: 0 auto;
 }
 .chartContainer{
-	width:520px;
-	height: 180x;
+	height: 180px;
 	border-radius: 20px;
 	border: 1px solid rgba(188, 226, 235, 1);
 	background-color: rgba(188, 226, 235, 0.3);
