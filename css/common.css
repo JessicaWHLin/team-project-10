@@ -265,6 +265,7 @@ body{
 	}
 }
 
+
 /*
 .all-container {
 	display: flex;
@@ -276,3 +277,12 @@ body{
 	right: 0;
 }
 */
+@media (max-width: 900px){
+	.all-container{
+		flex-direction: column;
+	}
+	.right-container{
+		position: relative;
+		top: 0;
+	}
+}
