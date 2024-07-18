@@ -1,5 +1,3 @@
-const x = document.getElementById("demo");
-
 let currentCityName = "臺北市";
 
 const stationToCityMap = new Map([
@@ -44,7 +42,6 @@ function getLocation() {
       handleLocationError
     );
   } else { 
-    x.innerHTML = "即時天氣"
     fetchWeather("臺北市"); 
     const stationIds = getStationIdsForCity("臺北市");
     if (stationIds.length > 0) {
