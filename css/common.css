@@ -1,6 +1,7 @@
 * {
 	box-sizing: border-box;
 }
+
 body{
 	font-size:20px;
 	margin: 0;
@@ -58,6 +59,7 @@ body{
 .city-and-time {
 	display: flex;
 	justify-content: space-between;
+
 
 }
 .city-name {
@@ -180,6 +182,7 @@ body{
 	position: absolute;
 	top: 15px;
 	right: 10px;
+
 }
 .value{
 	font-family: 'Noto Sans TC', sans-serif;
@@ -197,6 +200,7 @@ body{
 	background-color: rgba(188, 226, 235, 0.8);
 	grid-column-start: 1;
 	grid-column-end: 3;
+
 
 	grid-row-start: 7;
 	grid-row-end: 9;
@@ -224,4 +228,3 @@ body{
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 
 }
-

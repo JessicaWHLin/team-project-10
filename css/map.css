@@ -1,4 +1,7 @@
 
+#svg-container {
+    position: relative;
+  }
 
 
 svg{
@@ -8,12 +11,35 @@ svg{
 
 path{
     stroke:#6cc6db;
-    stroke-width: 5px;
+    stroke-width: 1px;
     transition:0.5s; 
     cursor:pointer;
 }
 
-path:hover {
+
+path:hover,
+g:hover path {
+    fill: #FFFDBB;
+    stroke:3px; 
+    transform: translate(-5px, -5px);
+}
+
+.highlight {
     fill: #FFFDBB;
     transform: translate(-5px, -5px);
 }
+
+
+  
+.tooltip {
+  position: absolute;
+  background-color: #6cc6db;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  display: none;
+  pointer-events: none;
+  z-index: 10;
+}
+  
+

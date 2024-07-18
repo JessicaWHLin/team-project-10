@@ -47,8 +47,8 @@
 					</div>
 					<div id="temperature-description" class="temperature-description"></div>
 					<div id="temperature-range" class="temperature-range">
-						最高溫: <span class="temp-range-value">${minTValue}</span><span class="temp-range-unit">°C</span> ~ 
-						最低溫: <span class="temp-range-value">${maxTValue}</span><span class="temp-range-unit">°C</span>
+						最高溫: <span class="temp-range-value"></span><span class="temp-range-unit">°C</span> ~ 
+						最低溫: <span class="temp-range-value"></span><span class="temp-range-unit">°C</span>
 					</div>	
 				</div>
 				<!--小方格_降雨機率、紫外線指數-->
@@ -66,9 +66,9 @@
 				</div>
 
 				<!--折線圖-->
-				<div class="long-box-1">折線圖1</div>
-				<div class="long-box-2">折線圖2</div>
-				<div class="long-box-3">折線圖3</div>
+				<div class="long-box-1">最高溫度x最低溫度</div>
+				<div class="long-box-2">紫外線指數</div>
+				<div class="long-box-3">降雨機率</div>
 			</div>
 		</div>
 		<!--右邊的grid，台灣地圖-->
@@ -141,10 +141,6 @@
 		</div>
 	</div>
 
-
-	<!--問Ellen，這個需要嗎?-->
-	<p id="demo"></p>
-	<div id="weather"></div>
 	<script>
 		// 以下是我申請的 KEY 請使用無所謂，你也可以自己去中央氣象局網站申請一個
 		// https://opendata.cwa.gov.tw/index
@@ -152,11 +148,12 @@
 	</script>
 	<!--即時天氣-->
 
-	<script src="js/realtime.js"></script>
+	<script type="module" src="js/realtime.js"></script>
 	<!--折線圖-->
-	<script src="js/weekly_chart.js"></script>
+	<script type="module" src="js/weekly_chart.js"></script>
 	<!--地圖-->
-	<script src="js/map.js"></script>
+	<script type="module" src="js/map.js"></script>
 
 </body>
+
 </html>
