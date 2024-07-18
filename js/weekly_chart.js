@@ -85,7 +85,7 @@ function date(originString){
 
 function createLineChart(labels,avgT,maxT,minT){
 	//氣象局空值
-	if(maxT || maxT==""){
+	if(maxT==""){
 		maxT=[0,0,0,0,0,0,0];
 		minT=[0,0,0,0,0,0,0];
 		labels=["氣","象","局","沒","有","資","料"];
@@ -190,7 +190,7 @@ function rainPop_daily(list1){
 }
 function createBarChart(id,labels,data){
 	//氣象局資料空值
-	if(data==""|| data){
+	if(data==""){
 		data=[2,2,2,2,2,2,2];
 		labels=["氣","象","局","沒","有","資","料"];
 	}
@@ -254,6 +254,10 @@ function assignColor(data){
 }
 
 function createBarChartForRain(id,labels,data){
+	if(data==""){
+		data=[0,0,0,0,0,0,0];
+		labels=["氣","象","局","沒","有","資","料"];
+	}
 	new Chart(id,{
 		type:"bar",
 		data:{
