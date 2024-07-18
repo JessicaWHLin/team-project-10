@@ -1,3 +1,5 @@
+import { weekly_chart } from "./weekly_chart.js";//J
+
 let currentCityName = "臺北市";
 
 const stationToCityMap = new Map([
@@ -55,6 +57,7 @@ function getLocation() {
 function handleLocationError(error) {
   console.warn('Error getting location:', error.message);
   fetchWeather("臺北市");
+
   const stationIds = getStationIdsForCity("臺北市");
   if (stationIds.length > 0) {
     fetchUV(stationIds);
@@ -127,6 +130,7 @@ async function fetchWeather(locationName) {
 }
 
 async function fetchUV(stationIds) {
+
   const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0005-001";
   const params = new URLSearchParams({
       'Authorization': CWB_API_KEY
@@ -246,3 +250,4 @@ function showUVrays(data) {
 document.addEventListener('DOMContentLoaded', async function() {
   getLocation()
 });
+
