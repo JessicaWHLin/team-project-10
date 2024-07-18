@@ -45,11 +45,13 @@ function getLocation() {
     );
   } else { 
     fetchWeather("臺北市"); 
+    weekly_chart("臺北市");
     const stationIds = getStationIdsForCity("臺北市");
     if (stationIds.length > 0) {
       fetchUV(stationIds);
       } else {
-      console.log("No station IDs found for", ctyName.textContent);
+        const uvRaysContainer = document.getElementById('uv-rays');
+        uvRaysContainer.textContent = '無資料';
     }
   }
 }
@@ -57,12 +59,13 @@ function getLocation() {
 function handleLocationError(error) {
   console.warn('Error getting location:', error.message);
   fetchWeather("臺北市");
-
+  weekly_chart("臺北市");
   const stationIds = getStationIdsForCity("臺北市");
   if (stationIds.length > 0) {
     fetchUV(stationIds);
     } else {
-    console.log("No station IDs found for", ctyName.textContent);
+      const uvRaysContainer = document.getElementById('uv-rays');
+      uvRaysContainer.textContent = '無資料';
   }
 }
 
@@ -77,28 +80,39 @@ function showPosition(position) {
   .then(data => {
       const ctyName = data.querySelector('ctyName');
       if (!ctyName) {
-        console.error('City name not found in the response');
         fetchWeather("臺北市"); 
+        weekly_chart("臺北市");
         const stationIds = getStationIdsForCity("臺北市");
         if (stationIds.length > 0) {
           fetchUV(stationIds);
           } else {
-          console.log("No station IDs found for", ctyName.textContent);
+            const uvRaysContainer = document.getElementById('uv-rays');
+            uvRaysContainer.textContent = '無資料';
         }
         return;
       }
       currentCityName = ctyName.textContent;
       fetchWeather(ctyName.textContent);
+      weekly_chart(ctyName.textContent);
       const stationIds = getStationIdsForCity(ctyName.textContent);
       if (stationIds.length > 0) {
         fetchUV(stationIds);
       } else {
-        console.log("No station IDs found for", ctyName.textContent);
+        const uvRaysContainer = document.getElementById('uv-rays');
+        uvRaysContainer.textContent = '無資料';
       }
   })
   .catch(error => {
     console.error('Error:', error);
-    fetchWeather("臺北市");  
+    fetchWeather("臺北市"); 
+    weekly_chart("臺北市"); 
+    const stationIds = getStationIdsForCity("臺北市");
+    if (stationIds.length > 0) {
+      fetchUV(stationIds);
+      } else {
+        const uvRaysContainer = document.getElementById('uv-rays');
+        uvRaysContainer.textContent = '無資料';
+    }
   });
 }
 
@@ -151,6 +165,7 @@ async function fetchUV(stationIds) {
 async function fetchWeatherAndUV(cityName) {
   try {
     await fetchWeather(cityName);
+    await weekly_chart(cityName)
     const stationIds = getStationIdsForCity(cityName);
     if (stationIds.length > 0) {
       await fetchUV(stationIds);

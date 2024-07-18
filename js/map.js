@@ -32,13 +32,7 @@ p.forEach(function(item) {
         cityName = item.getAttribute("data-name");
         console.log(cityName);
         highlightCity(cityName);
-        //J 
-        fetchWeather(cityName);
-        let stationIds=[];
-        stationIds=findLocationIds(cityName);
-        fetchUV(stationIds);
-        weekly_chart(cityName); 
-       
+        fetchWeatherAndUV(cityName)
     });
 });
 
