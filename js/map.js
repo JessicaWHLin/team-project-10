@@ -16,7 +16,9 @@ export function highlightCity(cityName) {
     });
 }
 
+
 fetchWeatherAndUV("彰化縣");
+
 
 // if user click map 
 const tooltip = document.getElementById("tooltip");
@@ -29,6 +31,7 @@ paths.forEach(path=> {
         console.log(cityName);
         // fetchWeatherAndUV(cityName);
         highlightCity(cityName);
+
     });
         path.addEventListener("mousemove", (event) => {
         tooltip.style.left = event.pageX + 10 + "px";

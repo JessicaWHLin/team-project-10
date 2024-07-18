@@ -1,50 +1,15 @@
 .canvas{
-	max-height: 200px;
+	max-height: 180px;
 	max-width:100%;
-	/* rgba(188, 226, 235, 1) */
 	border-radius: 20px;
+	margin: 0 auto;
 }
 .chartContainer{
-	width:425px;
+	width:520px;
+	height: 180x;
 	border-radius: 20px;
 	border: 1px solid rgba(188, 226, 235, 1);
 	background-color: rgba(188, 226, 235, 0.3);
 	font-size: 15px;
-	
-}
-.tableContainer{
-	width:100%;
-	height: 200px;
-	border-radius: 20px;
-	margin-top: 10px;
-	border: 1px solid rgba(188, 226, 235, 1);
-	/* border-collapse: collapse; */
-	text-align: center;
-}
-.row{
-	border: 2px solid rgba(188, 226, 235, 1);
-}
-td,th{
-	border: 2px solid rgba(188, 226, 235, 1);
-}
-table {
-  width: 100%;	
-}
-#cell0-0, #cell1-0, #cell2-0{
-	font-size: 15px;
-	font-weight: 700;
-	width:35px;
-}
-#cell0-0{
-	border-radius:20px 0 0 0;
-}
-#cell0-7{
-	border-radius:0 20px 0 0;
-}
 
-#cell2-0{
-	border-radius:0 0 0 20px;
-}
-#cell2-7{
-	border-radius:0 0 20px 0;
 }
