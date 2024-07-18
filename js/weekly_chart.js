@@ -4,7 +4,7 @@
 let chartContainer=document.querySelector(".long-box-1");
 chartContainer.classList.add("chartContainer");
 let showCityName=document.createElement("div");
-showCityName.textContent= "臺北市";
+// showCityName.textContent= "臺北市";
 chartContainer.appendChild(showCityName);
 //line chart
 let canvasLineChart=document.createElement("canvas");
