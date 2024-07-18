@@ -1,3 +1,4 @@
+
 // const CWB_API_KEY="CWB-840CF1E7-FC59-4E06-81C9-F4BB79253855";
 let city="臺北市";
 let chartContainer=document.querySelector(".long-box-1");
@@ -16,7 +17,9 @@ canvasBarChart_UV.id="barChart_UV";
 canvasBarChart_UV.classList.add("canvasChart");
 chartContainer.appendChild(canvasBarChart_UV);
 
+
 weekly_chart(city);
+
 
 
 //函式區
@@ -24,11 +27,14 @@ export function weekly_chart(cityName){
 	showCityName.textContent=cityName;
 	let url=`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${CWB_API_KEY}&locationName=${cityName}`;
  	fetch(url)
+
 	.then(response=>{
 		return response.json();
 	}).then((data)=>{
 		let weeklyData=data.records.locations[0].location[0].weatherElement;
+
 		// console.log(weeklyData);
+
 		//溫度
 		let avgT=weeklyData[1].time;
 		let maxT=weeklyData[12].time;
@@ -40,11 +46,13 @@ export function weekly_chart(cityName){
 		let rainPop=weeklyData[0];
 		//紫外線
 		let UVI=weeklyData[9];
+
 		let UVI_list=get_data_list(UVI.time);
 
 		createLineChart(avgT_list[0],avgT_list[1],maxT_list[1],minT_list[1]);
 		
 		createBarChart("barChart_UV",UVI_list[0],UVI_list[1]);
+
 	}).catch(error=>{
 		console.log("error:", error);
 	});
@@ -58,8 +66,10 @@ function date(originString){
 	return formattedDate;
 }
 
+
 async function createLineChart(labels,avgT,maxT,minT){
 	new Chart("lineChart",{
+
 		type:"line",
 		data:{
 			labels:labels,
@@ -95,16 +105,20 @@ async function createLineChart(labels,avgT,maxT,minT){
 				borderWidth:1//線段寬度,default=3
 			}
 		]
+
 	},
 		
 		options:{
+
 			responsive: true,
 			legend:{display:true}, //是否顯示圖例
 			scales:{
 				yAxes: [
+
 					{ticks: {min: 24, max:40},
 					gridLines: {display:false}
 				}
+
 				],
 				xAxes: [{
 					gridLines: {
@@ -148,6 +162,7 @@ function rainPop_daily(list1){
 		}
 	}
 	return result;
+
 }
 
 function createBarChart(id,labels,data){
@@ -205,4 +220,5 @@ function assignColor(data){
 			}
 	}
 	return result;
+
 }
