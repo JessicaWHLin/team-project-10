@@ -3,8 +3,8 @@
 
 let chartContainer1=document.querySelector(".long-box-1");
 chartContainer1.classList.add("chartContainer");
-let showCityName=document.createElement("span");
-chartContainer1.appendChild(showCityName);
+let showCityName1=document.createElement("span");
+chartContainer1.appendChild(showCityName1);
 
 //line chart
 let canvasLineChart=document.createElement("canvas");
@@ -13,14 +13,17 @@ canvasLineChart.classList.add("canvasChart");
 chartContainer1.appendChild(canvasLineChart);
 //bar chart UV Index
 let chartContainer2=document.querySelector(".long-box-2");
+let showCityName2=document.createElement("span");
+chartContainer2.appendChild(showCityName2);
 chartContainer2.classList.add("chartContainer");
 let canvasBarChart_UV=document.createElement("canvas");
 canvasBarChart_UV.id="barChart_UV";
 canvasBarChart_UV.classList.add("canvasChart");
-
 chartContainer2.appendChild(canvasBarChart_UV);
 //bar chart rain pop
 let chartContainer3=document.querySelector(".long-box-3");
+let showCityName3=document.createElement("span");
+chartContainer3.appendChild(showCityName3);
 chartContainer3.classList.add("chartContainer");
 let canvasBarChart_Rain=document.createElement("canvas");
 canvasBarChart_Rain.id="barChart_Rain";
@@ -30,7 +33,9 @@ chartContainer3.appendChild(canvasBarChart_Rain);
 
 //函式區
 export async function weekly_chart(cityName){
-	showCityName.textContent=cityName;
+	showCityName1.textContent=cityName;
+	showCityName2.textContent=cityName;
+	showCityName3.textContent=cityName;
 	
 	let url=`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${CWB_API_KEY}&locationName=${cityName}`;
  	fetch(url)
@@ -79,7 +84,12 @@ function date(originString){
 
 
 function createLineChart(labels,avgT,maxT,minT){
-
+	//氣象局空值
+	if(maxT || maxT==""){
+		maxT=[0,0,0,0,0,0,0];
+		minT=[0,0,0,0,0,0,0];
+		labels=["氣","象","局","沒","有","資","料"];
+	}
 	new Chart("lineChart",{
 
 		type:"line",
@@ -99,8 +109,8 @@ function createLineChart(labels,avgT,maxT,minT){
 			{
 				label:"最高溫度",
 				data:maxT,
-				backgroundColor:"#F56A01",
-				borderColor:"#F56A01",
+				backgroundColor:"#FAC400",
+				borderColor:"#FAC400",
 				fill:false,
 				pointRadius: 4,
 				pointHoverRadius: 6,
@@ -109,8 +119,8 @@ function createLineChart(labels,avgT,maxT,minT){
 			{
 				label:"最低溫度",
 				data:minT,
-				backgroundColor:"#5C9CE5",
-				borderColor:"#5C9CE5",
+				backgroundColor:"#5BCAE2",
+				borderColor:"#5BCAE2",
 				fill:false,
 				pointRadius: 4,
 				pointHoverRadius: 6,
@@ -180,9 +190,9 @@ function rainPop_daily(list1){
 }
 function createBarChart(id,labels,data){
 	//氣象局資料空值
-	if(data==""){
-		data=[2,4,6,8,10,12,14];
-		labels=["7/18","7/19","7/20","7/21","7/22","7/23","7/24"];
+	if(data==""|| data){
+		data=[2,2,2,2,2,2,2];
+		labels=["氣","象","局","沒","有","資","料"];
 	}
 	let barColors=assignColor(data);
 	// console.log(barColors);
@@ -249,7 +259,7 @@ function createBarChartForRain(id,labels,data){
 		data:{
 			labels:labels,
 			datasets:[{
-				backgroundColor:"grey",
+				backgroundColor:"#5BCAE2",
 				data:data
 			}]
 			},
