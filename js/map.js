@@ -1,3 +1,4 @@
+
 var cityName = "";
 
 // handle user input
@@ -13,6 +14,7 @@ function highlightCity(cityName) {
         }
     });
 }
+
 
 
 
@@ -39,5 +41,7 @@ paths.forEach(path=> {
 
 // Trigger user input prompt on load
 getUserInputAndHighlight();
+
+
 
 
