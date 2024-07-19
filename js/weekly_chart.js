@@ -39,7 +39,6 @@ export async function weekly_chart(cityName){
 	
 	let url=`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${CWB_API_KEY}&locationName=${cityName}`;
  	fetch(url)
-
 	.then(response=>{
 		return response.json();
 	}).then((data)=>{
@@ -55,6 +54,14 @@ export async function weekly_chart(cityName){
 		let avgT_list=get_data_list(avgT);
 		let maxT_list=get_data_list(maxT);
 		let minT_list=get_data_list(minT);
+		// console.log(maxT_list);
+		// for(let i=0;i<maxT_list[0];i++){
+		// 	let temp="";
+		// 	let result=[];
+		// 	if(maxT_list[0][i]!=""&& maxT_list[0][i+1]==""){
+		// 		result.push(maxT_list[0][i]+"早")
+		// 	}
+		// }
 		//降雨機率
 		let rainPop=weeklyData[0];
 		let rainPop_list=rainPop_daily(rainPop);
@@ -138,19 +145,18 @@ function createLineChart(labels,avgT,maxT,minT){
 			legend:{display:true}, //是否顯示圖例
 			scales:{
 				yAxes: [
-
-					{ticks: {min: 24, max:40},
-					gridLines: {display:false}
-				}
-
+					{ticks: {maxTicksLimit: 5 },
+						gridLines: {display:true}
+					}
 				],
 				xAxes: [{
 					gridLines: {
 							display:false
 					}
-			}],
+				}],
 			},
-			layout:{padding:{left:10,right:10}},
+			layout:{padding:{left:10,right:10,bottom:15,top:10}},
+			
 		}
 	})
 }
@@ -217,15 +223,16 @@ function createBarChart(id,labels,data){
 				}],
 					yAxes: [{
 						gridLines: {
-								display:false
+								display:true
 						},
 						ticks: {
 							min: 0,
-							max: 16
+							max: 16,
+							maxTicksLimit: 4
 						}
 					}],
 				},
-				layout:{padding:{left:10,right:10}},
+				layout:{padding:{left:10,right:10,bottom:15,top:10}},
 			}
 	});
 }
@@ -279,15 +286,16 @@ function createBarChartForRain(id,labels,data){
 				}],
 					yAxes: [{
 						gridLines: {
-								display:false
+								display:true
 						},
-						// ticks: {
-						// 	min: 0,
-						// 	max: 100
-						// }
+						ticks: {
+							min: 0,
+							max: 100,
+							maxTicksLimit: 5
+						}
 					}],
 				},
-				layout:{padding:{left:10,right:10}},
+				layout:{padding:{left:10,right:10, bottom:15,top:10}},
 			}
 	});
 
