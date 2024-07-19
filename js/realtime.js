@@ -117,7 +117,27 @@ function getStationIdsForCity(cityName) {
     ["467650", "南投縣"],
     ["467660", "臺東縣"],
     ["467790", "屏東縣"],
-    ["467990", "連江縣"]
+    ["467990", "連江縣"],
+    ["C0K330", "雲林縣"],
+    ["C0K390", "雲林縣"],
+    ["C0K400", "雲林縣"],
+    ["C0K410", "雲林縣"],
+    ["C0K420", "雲林縣"],
+    ["C0K430", "雲林縣"],
+    ["C0K440", "雲林縣"],
+    ["C0K450", "雲林縣"],
+    ["C0K460", "雲林縣"],
+    ["C0K470", "雲林縣"],
+    ["C0K480", "雲林縣"],
+    ["C0K500", "雲林縣"],
+    ["C0K510", "雲林縣"],
+    ["C0K530", "雲林縣"],
+    ["C0K550", "雲林縣"],
+    ["C0K560", "雲林縣"],
+    ["C0K580", "雲林縣"],
+    ["C0K590", "雲林縣"],
+    ["C0K600", "雲林縣"]
+
   ]);
   const stationIds = [];
   for (let [key, value] of stationToCityMap.entries()) {
@@ -211,6 +231,7 @@ function showBigBoxContent(data){
     let iconSrc = '';
     switch (wxDescription) {
       case '多雲短暫陣雨':
+      case '多雲午後短暫雷陣雨':
         iconSrc = 'images/rain_cloudy.png';
         break;
       case '晴午後短暫雷陣雨':
@@ -218,6 +239,7 @@ function showBigBoxContent(data){
         break;
       case '晴時多雲':
       case '多雲時晴':
+      case '多雲':
         iconSrc = 'images/sun_cloudy.png';
         break;
       case '多雲時陰':
@@ -311,7 +333,26 @@ function findCommonCity(stationIds) {
     ["467650", "南投縣"],
     ["467660", "臺東縣"],
     ["467790", "屏東縣"],
-    ["467990", "連江縣"]
+    ["467990", "連江縣"],
+    ["C0K330", "雲林縣"],
+    ["C0K390", "雲林縣"],
+    ["C0K400", "雲林縣"],
+    ["C0K410", "雲林縣"],
+    ["C0K420", "雲林縣"],
+    ["C0K430", "雲林縣"],
+    ["C0K440", "雲林縣"],
+    ["C0K450", "雲林縣"],
+    ["C0K460", "雲林縣"],
+    ["C0K470", "雲林縣"],
+    ["C0K480", "雲林縣"],
+    ["C0K500", "雲林縣"],
+    ["C0K510", "雲林縣"],
+    ["C0K530", "雲林縣"],
+    ["C0K550", "雲林縣"],
+    ["C0K560", "雲林縣"],
+    ["C0K580", "雲林縣"],
+    ["C0K590", "雲林縣"],
+    ["C0K600", "雲林縣"]
   ]);
 
   const firstCity = stationToCityMap.get(stationIds[0]); 
