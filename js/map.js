@@ -28,7 +28,6 @@ paths.forEach(path=> {
         cityName = event.target.getAttribute("data-name");
         tooltip.innerHTML=cityName;
         tooltip.style.display="block";
-        console.log(cityName);
         fetchWeatherAndUV(cityName);
         highlightCity(cityName);
 
