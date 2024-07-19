@@ -1,7 +1,3 @@
-* {
-	box-sizing: border-box;
-}
-
 body{
 	font-size:20px;
 	margin: 0;
@@ -11,11 +7,13 @@ body{
 	display: flex;
 	height: 100%;
 	width: 100%;
+	justify-content: space-between;
 }
-.right-container {
-	position: absolute;
-	right: 0;
-}
+
+/* .right-container { */
+	/*position: absolute;
+	right: 400px;*/
+/* } */
 
 .left-grid {
 	display: grid;
@@ -28,6 +26,7 @@ body{
 	margin-left: 20px;
 	margin-right: 20px;
 }
+
 .big-box {
 	grid-column-start: 1;
 	grid-column-end: 3;
@@ -37,8 +36,8 @@ body{
 	border-radius: 15px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 	padding: 90px;
-
 }
+
 .website-name {
 	position: absolute;
 	top: 0;
@@ -85,9 +84,9 @@ body{
     font-size: 16px;
     font-weight: 100;
     color:#666666;	
-	position: absolute;
+	position: relative;
 	left: 150px;
-	
+	left: 0;
 }
 /*均溫+示意圖*/
 .average-temperature-content {
@@ -103,7 +102,6 @@ body{
 .major-sun-icon {
 	height: 75px;
 	width: 75px;
-
 	bottom: 30px;
 }
 .description-wrapper {
@@ -206,7 +204,7 @@ body{
 	font-family: 'Noto Sans TC', sans-serif;
 	font-size: 20px;
 	font-weight: 500;
-	color:#666666;
+	color:#666666
 }
 .long-box-2 {
 	background-color: rgba(188, 226, 235, 0.8);
@@ -270,96 +268,159 @@ body{
 
 
 
-/* RWD */
+/*RWD*/
 @media (max-width: 1200px){
-    .all-container{
-        flex-direction: column-reverse;
-        align-items: center;
-    }
-    .right-container{
-        position: relative;
-        right: 0;
-    }
+	.all-container{
+		flex-direction: column-reverse;
+		align-items: center;
+	}
+	/*.right-container{
+		position: relative;
+		right: 0;
+	}*/
+	.city-temp-feel{
+		position: relative;
+		left: 0;
+	}
 }
 
 @media (max-width: 900px){
-    .all-container{
-        flex-direction: column-reverse;
-        align-items: center;
-    }
-    .right-container{
-        position: relative;
-        top: 0;
-    }
+	.right-container{
+		width: 100%;
+	}	
+	.left-grid{
+		width: 500px;
+		margin-top: 20px;
+	}
+	#svg-container{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		margin-top: 80px;
+	}
+	#svg-container svg{
+		width: 500px;
+		height: auto;
+		margin: 0 auto;
+	}
+	.time{
+		display: flex;
+		align-items: end;
+	}
+	.city-temp-feel{
+		position: relative;
+		left: 0;
+	}
 }
 
 @media (max-width: 600px){
-    .right-container{
-        width: 100%;
-    }
-    .left-grid{
-        width: 400px;
-        margin-top: 20px;
-    }
-    #svg-container{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 80px;
-    }
-    #svg-container svg{
-        width: 400px;
-        height: auto;
-        margin: 0 auto;
-    }
-    .sun-light-icon{
-        height: 50px;
-        width: 50px;
-    }
-    .rain-drop-icon{
-        height: 50px;
-        width: 50px;
-    }
-    .major-sun-icon{
-        height: 50px;
-        width: 50px;
-    }
-    .temp-value{
-        font-size: 100px;
-    }
-    .temp-unit{
-        font-size: 30px;
-    }
+	.right-container{
+		width: 100%;
+	}	
+	.left-grid{
+		width: 400px;
+		margin-top: 20px;
+	}
+	#svg-container{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		margin-top: 80px;
+	}
+	#svg-container svg{
+		width: 400px;
+		height: auto;
+		margin: 0 auto;
+	}
+	.sun-light-icon{
+		height: 50px;
+		width: 50px;
+	}
+	.rain-drop-icon{
+		height: 50px;
+		width: 50px;
+	}
+	.major-sun-icon{
+		height: 50px;
+		width: 50px;
+	}
+	.temp-value{
+		font-size: 100px;
+	}
+	.temp-unit{
+		font-size: 30px;
+	}
+	.city-name{
+		font-size: 30px;
+	}
+	.time{
+		font-size: 30px;
+		display: flex;
+		align-items: end;
+	}
+	.city-temp-feel{
+		position: relative;
+		left: 0;
+	}
+	.average-temperature-content{
+		justify-content: center;
+		padding-top: 20px;
+	}
+	.big-box{
+		padding-top: 90px;
+		padding-left: 40px;
+		padding-right: 40px;
+	}
 }
 
 @media (max-width: 460px){
-    .big-box{
-        padding: 20px;
-    }
-    .left-grid{
-        width: 300px;
-        margin-top: 20px;
-        row-gap: 10px;
-        column-gap: 10px;
-    }
-    #svg-container svg{
-        width: 320px;
-        height: auto;
-        margin: 0 auto;
-    }
-    .sun-light-icon{
-        display: none;
-    }
-    .rain-drop-icon{
-        display: none;
-    }
-    .major-sun-icon{
-        display: none;
-    }
-    .city-name{
-        font-size: 20px;
-    }
-    .time{
-        font-size: 20px;
-    }
+	.big-box{
+		padding-top: 90px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.left-grid{
+		width: 300px;
+		margin-top: 20px;
+		row-gap: 10px;
+		column-gap: 10px;
+	}
+	#svg-container svg{
+		width: 320px;
+		height: auto;
+		margin: 0 auto;
+	}
+	.sun-light-icon{
+		display: none;
+	}
+	.rain-drop-icon{
+		display: none;
+	}
+	.city-name{
+		font-size: 30px;
+	}
+	.time{
+		font-size: 30px;
+		display: flex;
+		align-items: end;
+	}
+	.average-temperature-content{
+		justify-content: center;
+		padding-top: 20px;
+	}
+	.city-temp-feel{
+		position: relative;
+		left: 0;
+	}
+	.detail-wrapper{
+		padding-top: 10px;
+	}
+	.small-box-title{
+		font-size: 18px;
+	}
 }
+
+
+
+
+

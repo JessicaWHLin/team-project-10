@@ -117,7 +117,27 @@ function getStationIdsForCity(cityName) {
     ["467650", "南投縣"],
     ["467660", "臺東縣"],
     ["467790", "屏東縣"],
-    ["467990", "連江縣"]
+    ["467990", "連江縣"],
+    ["C0K330", "雲林縣"],
+    ["C0K390", "雲林縣"],
+    ["C0K400", "雲林縣"],
+    ["C0K410", "雲林縣"],
+    ["C0K420", "雲林縣"],
+    ["C0K430", "雲林縣"],
+    ["C0K440", "雲林縣"],
+    ["C0K450", "雲林縣"],
+    ["C0K460", "雲林縣"],
+    ["C0K470", "雲林縣"],
+    ["C0K480", "雲林縣"],
+    ["C0K500", "雲林縣"],
+    ["C0K510", "雲林縣"],
+    ["C0K530", "雲林縣"],
+    ["C0K550", "雲林縣"],
+    ["C0K560", "雲林縣"],
+    ["C0K580", "雲林縣"],
+    ["C0K590", "雲林縣"],
+    ["C0K600", "雲林縣"]
+
   ]);
   const stationIds = [];
   for (let [key, value] of stationToCityMap.entries()) {
@@ -157,16 +177,37 @@ async function fetchUV(stationIds) {
   try {
     const response = await fetch(`${url}?${params.toString()}`);
     const data = await response.json();
-    showUVrays(data);
+    showUVrays(data, stationIds);
   } catch (error) {
-    console.error('Error fetching UV:', error);
+    const locationName = findCommonCity(stationIds)
+    console.log(locationName)
+    const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091";
+    const params = new URLSearchParams({
+      'Authorization': CWB_API_KEY,
+      'locationName': locationName 
+    });
+
+    fetch(`${url}?${params.toString()}`)
+      .then(response => response.json())
+      .then(data => {
+        const uviElement = data.records.locations[0].location[0].weatherElement.find(el => el.elementName === "UVI");
+        if (uviElement && uviElement.time.length > 0) {
+          const uviValue = uviElement.time[0].elementValue[0].value;
+          uvRaysContainer.textContent = uviValue;
+        } else {
+          uvRaysContainer.textContent = '無資料';
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching additional data:', error);
+        uvRaysContainer.textContent = '無資料';
+      });
   }
 }
 
 //給地圖點擊的接口
 export function fetchWeatherAndUV(cityName) {
   try {
-    console.log('hi')
     fetchWeather(cityName);
     weekly_chart(cityName);
     const stationIds = getStationIdsForCity(cityName);
@@ -193,13 +234,18 @@ function showBigBoxContent(data){
         iconSrc = 'images/rain_cloudy.png';
         break;
       case '晴午後短暫雷陣雨':
+      case '多雲午後短暫雷陣雨':
         iconSrc = 'images/sun_rain_cloudy.png';
         break;
       case '晴時多雲':
       case '多雲時晴':
         iconSrc = 'images/sun_cloudy.png';
         break;
+      case '多雲短暫陣雨或雷雨':
+        iconSrc = 'images/rain_thunder_cloudy.png';
+        break;
       case '多雲時陰':
+      case '多雲':
         iconSrc = 'images/super_cloudy.png';
         break;
       default:
@@ -257,9 +303,73 @@ function showRainfallRate(data) {
   }
 }
 
-function showUVrays(data) {
+function findCommonCity(stationIds) {
+  const stationToCityMap = new Map([
+    ["466850", "新北市"],
+    ["466881", "新北市"],
+    ["466900", "新北市"],
+    ["466910", "臺北市"],
+    ["466920", "臺北市"],
+    ["466930", "臺北市"],
+    ["466940", "基隆市"],
+    ["466950", "基隆市"],
+    ["466990", "花蓮縣"],
+    ["467050", "桃園市"],
+    ["467080", "宜蘭縣"],
+    ["467110", "金門縣"],
+    ["467270", "彰化縣"],
+    ["467280", "苗栗縣"],
+    ["467300", "澎湖縣"],
+    ["467350", "澎湖縣"],
+    ["467410", "臺南市"],
+    ["467420", "臺南市"],
+    ["467441", "高雄市"],
+    ["467480", "嘉義市"],
+    ["467490", "臺中市"],
+    ["467530", "嘉義縣"],
+    ["467540", "臺東縣"],
+    ["467550", "南投縣"],
+    ["467571", "新竹縣"],
+    ["467590", "屏東縣"],
+    ["467610", "臺東縣"],
+    ["467620", "臺東縣"],
+    ["467650", "南投縣"],
+    ["467660", "臺東縣"],
+    ["467790", "屏東縣"],
+    ["467990", "連江縣"],
+    ["C0K330", "雲林縣"],
+    ["C0K390", "雲林縣"],
+    ["C0K400", "雲林縣"],
+    ["C0K410", "雲林縣"],
+    ["C0K420", "雲林縣"],
+    ["C0K430", "雲林縣"],
+    ["C0K440", "雲林縣"],
+    ["C0K450", "雲林縣"],
+    ["C0K460", "雲林縣"],
+    ["C0K470", "雲林縣"],
+    ["C0K480", "雲林縣"],
+    ["C0K500", "雲林縣"],
+    ["C0K510", "雲林縣"],
+    ["C0K530", "雲林縣"],
+    ["C0K550", "雲林縣"],
+    ["C0K560", "雲林縣"],
+    ["C0K580", "雲林縣"],
+    ["C0K590", "雲林縣"],
+    ["C0K600", "雲林縣"]
+  ]);
+
+  const firstCity = stationToCityMap.get(stationIds[0]); 
+
+  const isCommonCity = stationIds.every(id => stationToCityMap.get(id) === firstCity);
+
+  return isCommonCity ? firstCity : null; 
+}
+
+function showUVrays(data,stationIds) {
   const uvRaysContainer = document.getElementById('uv-rays');
   if (data.records.weatherElement.location.length === 0) {
+    const locationName = findCommonCity(stationIds)
+    console.log(locationName)
     const url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091";
     const params = new URLSearchParams({
       'Authorization': CWB_API_KEY,
@@ -279,7 +389,7 @@ function showUVrays(data) {
       })
       .catch(error => {
         console.error('Error fetching additional data:', error);
-        uvRaysContainer.textContent = '資料請求錯誤';
+        uvRaysContainer.textContent = '無資料';
       });
   } else {
     const maxUVIndex = data.records.weatherElement.location.reduce((max, item) => {
