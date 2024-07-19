@@ -201,6 +201,10 @@ body{
 	grid-row-end: 9;
 	border-radius: 15px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size: 20px;
+	font-weight: 500;
+	color:#666666
 }
 .long-box-2 {
 	background-color: rgba(188, 226, 235, 0.8);
@@ -210,6 +214,10 @@ body{
 	grid-row-end: 11;
 	border-radius: 15px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size: 20px;
+	font-weight: 500;
+	color:#666666;
 }
 .long-box-3 {
 	background-color: rgba(188, 226, 235, 0.8);
@@ -219,6 +227,10 @@ body{
 	grid-row-end: 13;
 	border-radius: 15px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size: 20px;
+	font-weight: 500;
+	color:#666666;
 }
 
 
