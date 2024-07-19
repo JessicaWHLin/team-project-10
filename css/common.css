@@ -84,9 +84,9 @@ body{
     font-size: 16px;
     font-weight: 100;
     color:#666666;	
-	position: absolute;
+	position: relative;
 	left: 150px;
-	
+	left: 0;
 }
 /*均溫+示意圖*/
 .average-temperature-content {
@@ -262,10 +262,14 @@ body{
 		flex-direction: column-reverse;
 		align-items: center;
 	}
-	/* .right-container{
+	/*.right-container{
 		position: relative;
 		right: 0;
-	} */
+	}*/
+	.city-temp-feel{
+		position: relative;
+		left: 0;
+	}
 }
 
 @media (max-width: 900px){
