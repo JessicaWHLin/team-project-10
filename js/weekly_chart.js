@@ -3,8 +3,8 @@
 
 let chartContainer1=document.querySelector(".long-box-1");
 chartContainer1.classList.add("chartContainer");
-let showCityName=document.createElement("span");
-chartContainer1.appendChild(showCityName);
+let showCityName1=document.createElement("span");
+chartContainer1.appendChild(showCityName1);
 
 //line chart
 let canvasLineChart=document.createElement("canvas");
@@ -13,14 +13,17 @@ canvasLineChart.classList.add("canvasChart");
 chartContainer1.appendChild(canvasLineChart);
 //bar chart UV Index
 let chartContainer2=document.querySelector(".long-box-2");
+let showCityName2=document.createElement("span");
+chartContainer2.appendChild(showCityName2);
 chartContainer2.classList.add("chartContainer");
 let canvasBarChart_UV=document.createElement("canvas");
 canvasBarChart_UV.id="barChart_UV";
 canvasBarChart_UV.classList.add("canvasChart");
-
 chartContainer2.appendChild(canvasBarChart_UV);
 //bar chart rain pop
 let chartContainer3=document.querySelector(".long-box-3");
+let showCityName3=document.createElement("span");
+chartContainer3.appendChild(showCityName3);
 chartContainer3.classList.add("chartContainer");
 let canvasBarChart_Rain=document.createElement("canvas");
 canvasBarChart_Rain.id="barChart_Rain";
@@ -30,11 +33,12 @@ chartContainer3.appendChild(canvasBarChart_Rain);
 
 //函式區
 export async function weekly_chart(cityName){
-	showCityName.textContent=cityName;
+	showCityName1.textContent=cityName;
+	showCityName2.textContent=cityName;
+	showCityName3.textContent=cityName;
 	
 	let url=`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${CWB_API_KEY}&locationName=${cityName}`;
  	fetch(url)
-
 	.then(response=>{
 		return response.json();
 	}).then((data)=>{
@@ -50,6 +54,14 @@ export async function weekly_chart(cityName){
 		let avgT_list=get_data_list(avgT);
 		let maxT_list=get_data_list(maxT);
 		let minT_list=get_data_list(minT);
+		// console.log(maxT_list);
+		// for(let i=0;i<maxT_list[0];i++){
+		// 	let temp="";
+		// 	let result=[];
+		// 	if(maxT_list[0][i]!=""&& maxT_list[0][i+1]==""){
+		// 		result.push(maxT_list[0][i]+"早")
+		// 	}
+		// }
 		//降雨機率
 		let rainPop=weeklyData[0];
 		let rainPop_list=rainPop_daily(rainPop);
@@ -79,7 +91,12 @@ function date(originString){
 
 
 function createLineChart(labels,avgT,maxT,minT){
-
+	//氣象局空值
+	if(maxT==""){
+		maxT=[0,0,0,0,0,0,0];
+		minT=[0,0,0,0,0,0,0];
+		labels=["氣","象","局","沒","有","資","料"];
+	}
 	new Chart("lineChart",{
 
 		type:"line",
@@ -99,8 +116,8 @@ function createLineChart(labels,avgT,maxT,minT){
 			{
 				label:"最高溫度",
 				data:maxT,
-				backgroundColor:"#F56A01",
-				borderColor:"#F56A01",
+				backgroundColor:"#FAC400",
+				borderColor:"#FAC400",
 				fill:false,
 				pointRadius: 4,
 				pointHoverRadius: 6,
@@ -109,8 +126,8 @@ function createLineChart(labels,avgT,maxT,minT){
 			{
 				label:"最低溫度",
 				data:minT,
-				backgroundColor:"#5C9CE5",
-				borderColor:"#5C9CE5",
+				backgroundColor:"#5BCAE2",
+				borderColor:"#5BCAE2",
 				fill:false,
 				pointRadius: 4,
 				pointHoverRadius: 6,
@@ -128,19 +145,18 @@ function createLineChart(labels,avgT,maxT,minT){
 			legend:{display:true}, //是否顯示圖例
 			scales:{
 				yAxes: [
-
-					{ticks: {min: 24, max:40},
-					gridLines: {display:false}
-				}
-
+					{ticks: {maxTicksLimit: 5 },
+						gridLines: {display:true}
+					}
 				],
 				xAxes: [{
 					gridLines: {
 							display:false
 					}
-			}],
+				}],
 			},
-			layout:{padding:{left:10,right:10}},
+			layout:{padding:{left:10,right:10,bottom:15,top:10}},
+			
 		}
 	})
 }
@@ -181,8 +197,8 @@ function rainPop_daily(list1){
 function createBarChart(id,labels,data){
 	//氣象局資料空值
 	if(data==""){
-		data=[2,4,6,8,10,12,14];
-		labels=["7/18","7/19","7/20","7/21","7/22","7/23","7/24"];
+		data=[2,2,2,2,2,2,2];
+		labels=["氣","象","局","沒","有","資","料"];
 	}
 	let barColors=assignColor(data);
 	// console.log(barColors);
@@ -207,15 +223,16 @@ function createBarChart(id,labels,data){
 				}],
 					yAxes: [{
 						gridLines: {
-								display:false
+								display:true
 						},
 						ticks: {
 							min: 0,
-							max: 16
+							max: 16,
+							maxTicksLimit: 4
 						}
 					}],
 				},
-				layout:{padding:{left:10,right:10}},
+				layout:{padding:{left:10,right:10,bottom:15,top:10}},
 			}
 	});
 }
@@ -244,12 +261,16 @@ function assignColor(data){
 }
 
 function createBarChartForRain(id,labels,data){
+	if(data==""){
+		data=[0,0,0,0,0,0,0];
+		labels=["氣","象","局","沒","有","資","料"];
+	}
 	new Chart(id,{
 		type:"bar",
 		data:{
 			labels:labels,
 			datasets:[{
-				backgroundColor:"grey",
+				backgroundColor:"#5BCAE2",
 				data:data
 			}]
 			},
@@ -265,15 +286,16 @@ function createBarChartForRain(id,labels,data){
 				}],
 					yAxes: [{
 						gridLines: {
-								display:false
+								display:true
 						},
-						// ticks: {
-						// 	min: 0,
-						// 	max: 100
-						// }
+						ticks: {
+							min: 0,
+							max: 100,
+							maxTicksLimit: 5
+						}
 					}],
 				},
-				layout:{padding:{left:10,right:10}},
+				layout:{padding:{left:10,right:10, bottom:15,top:10}},
 			}
 	});
 
