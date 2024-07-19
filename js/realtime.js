@@ -231,18 +231,21 @@ function showBigBoxContent(data){
     let iconSrc = '';
     switch (wxDescription) {
       case '多雲短暫陣雨':
-      case '多雲午後短暫雷陣雨':
         iconSrc = 'images/rain_cloudy.png';
         break;
       case '晴午後短暫雷陣雨':
+      case '多雲午後短暫雷陣雨':
         iconSrc = 'images/sun_rain_cloudy.png';
         break;
       case '晴時多雲':
       case '多雲時晴':
-      case '多雲':
         iconSrc = 'images/sun_cloudy.png';
         break;
+      case '多雲短暫陣雨或雷雨':
+        iconSrc = 'images/rain_thunder_cloudy.png';
+        break;
       case '多雲時陰':
+      case '多雲':
         iconSrc = 'images/super_cloudy.png';
         break;
       default:
